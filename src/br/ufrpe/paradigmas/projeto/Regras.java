@@ -25,6 +25,7 @@ public class Regras {
 		}
 
 		// STRAIGHT FLUSH
+		
 		// QUADRA
 		// FULL HOUSE
 		// FLUSH
