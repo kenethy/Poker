@@ -1,10 +1,13 @@
 package br.ufrpe.paradigmas.projeto;
 
+import java.util.ArrayList;
+
 public class Player {
 
 	private byte[] valor;
 	private char[] naipe;
-	Maos mao;
+	ArrayList <Maos> mao;
+	private byte cartaAlta;
 
 	public Player() {
 		this.valor = new byte[5];
@@ -12,7 +15,7 @@ public class Player {
 	}
 
 	public void setMao(Maos mao) {
-		this.mao = mao;
+		this.mao.add(mao);
 	}
 	
 	public byte[] getValor() {
@@ -37,5 +40,13 @@ public class Player {
 
 	public void setNaipe(char naipe, byte index) {
 		this.naipe[index] = naipe;
+	}
+
+	public byte getCartaAlta() {
+		return cartaAlta;
+	}
+
+	public void setCartaAlta(byte cartaAlta) {
+		this.cartaAlta = cartaAlta;
 	}
 }
