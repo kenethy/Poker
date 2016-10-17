@@ -30,8 +30,64 @@ public class Regras {
 		return true;
 	}
 
+	//ANALISE DOS RANKINGS RELACIONADOS A MÃO DO JOGADOR
 	public void rankingMao(Player player) {
+		
+		
+		/**
+		 * CARTA ALTA
+		 */
+		player.setCartaAlta(player.getValorIndex((byte)4));
+		
+		/**
+		 * PAR
+		 */
+		
+		/**
+		 * DOIS PARES
+		 */
+		
+		/**
+		 * TRINCA
+		 */
+		
+		/**
+		 * SEQUÊNCIA
+		 */
+		// VERIFICAÇÃO DA SEQUENCIA
+		verifica = verificaSequencia(player);
+		// SE A VERIFICA INDICAR UMA SEQUENCIA  
+		if (verifica == true)
+			player.setMao(Maos.sequencia);
+		
+		/**
+		 * FLUSH
+		 */
+		// VERIFICA SE OS NAIPES SAO IGUAIS, SE SIM INDICA QUE EXISTE UM FLUSH
+		verifica = verificaNaipes(player);
+		if(verifica == true)
+			player.setMao(Maos.flush);
 
+		/**
+		 * FULL HOUSE  (UM PAR E UMA TRINCA)
+		 */
+		
+		
+		/**
+		 * QUADRA
+		 */
+
+		/**
+		 * STRAIGHT FLUSH
+		 */
+		// SÓ ENTRA NO CASO SE OS NAIPES DE TODAS AS CARTAS FOREM O MESMO
+		if (verifica == true) {
+			verifica = verificaSequencia(player);
+			// SE A COMPARAÇÃO INDICAR UMA SEQUENCIA RETORNA STRAIGHT FLUSH
+			if (verifica == true)
+				player.setMao(Maos.straightFlush);
+		}
+		
 		/**
 		 * ROYAL FLUSH
 		 */
@@ -48,60 +104,7 @@ public class Regras {
 								player.setMao(Maos.royalFlush);
 		}
 
-		/**
-		 * STRAIGHT FLUSH
-		 */
-		// SÓ ENTRA NO CASO SE OS NAIPES DE TODAS AS CARTAS FOREM O MESMO
-		if (verifica == true) {
-			verifica = verificaSequencia(player);
-			// SE A COMPARAÇÃO INDICAR UMA SEQUENCIA RETORNA STRAIGHT FLUSH
-			if (verifica == true)
-				player.setMao(Maos.straightFlush);
-		}
 
-		/**
-		 * QUADRA
-		 */
-
-		/**
-		 * FULL HOUSE  (UM PAR E UMA TRINCA)
-		 */
-
-		/**
-		 * FLUSH
-		 */
-		// VERIFICA SE OS NAIPES SAO IGUAIS, SE SIM INDICA QUE EXISTE UM FLUSH
-		verifica = verificaNaipes(player);
-		if(verifica == true)
-			player.setMao(Maos.flush);
-
-		/**
-		 * SEQUÊNCIA
-		 */
-		// VERIFICAÇÃO DA SEQUENCIA
-		verifica = verificaSequencia(player);
-		// SE A VERIFICA INDICAR UMA SEQUENCIA  
-		if (verifica == true)
-			player.setMao(Maos.sequencia);
-
-		/**
-		 * TRINCA
-		 */
 		
-
-		/**
-		 * DOIS PARES
-		 */
-		
-
-		/**
-		 * PAR
-		 */
-		
-
-		/**
-		 * CARTA ALTA
-		 */
-		player.setCartaAlta(player.getValorIndex((byte)4));
 	}
 }
