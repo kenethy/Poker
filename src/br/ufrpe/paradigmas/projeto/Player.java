@@ -8,6 +8,7 @@ public class Player {
 	private char[] naipe;
 	ArrayList <Maos> mao;
 	private byte cartaAlta;
+	private byte cartaRanking;
 
 	public Player() {
 		this.valor = new byte[5];
@@ -48,5 +49,13 @@ public class Player {
 
 	public void setCartaAlta(byte cartaAlta) {
 		this.cartaAlta = cartaAlta;
+	}
+
+	public byte getCartaRanking() {
+		return cartaRanking;
+	}
+
+	public void setCartaRanking(byte cartaRanking) {
+		this.cartaRanking = cartaRanking;
 	}
 }
