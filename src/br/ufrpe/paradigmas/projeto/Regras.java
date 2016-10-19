@@ -1,12 +1,16 @@
 package br.ufrpe.paradigmas.projeto;
 
-//REGRAS DO POKER - https://www.pokerstars.com/br/poker/
+//REGRAS DO POKER - https://www.pokerstars.com/br/poker/games/rules/hand-rankings/
 
 public class Regras {
 
 	private boolean verifica;
 	private static byte v;
 	private char naipe;
+	private boolean par = false;
+	private boolean doisPares = false;
+	private boolean trinca = false;
+	private boolean quadra = false;
 
 	// VERIFICA SE TODAS AS CARTAS POSSUEM NAIPES IGUAIS
 	public boolean verificaNaipes(Player player) {
@@ -33,7 +37,6 @@ public class Regras {
 	//ANALISE DOS RANKINGS RELACIONADOS A MÃO DO JOGADOR
 	public void rankingMao(Player player) {
 		
-		
 		/**
 		 * CARTA ALTA
 		 */
@@ -42,6 +45,24 @@ public class Regras {
 		/**
 		 * PAR
 		 */
+		v = player.getValorIndex((byte)0);
+		for(byte i = 1; i < 4; i++){
+			if(v == player.getValorIndex(i)){
+				par = true;
+				if(player.getCartaRanking() == 0)
+					player.setCartaRanking(v);
+				else {
+					doisPares = true;
+					par = false;
+					
+				}
+				if(v == player.getValorIndex((byte) (i+1))){
+					trinca = true;
+					par = false;
+				}
+			}
+		}
+		
 		
 		/**
 		 * DOIS PARES
@@ -80,6 +101,7 @@ public class Regras {
 		/**
 		 * STRAIGHT FLUSH
 		 */
+		
 		// SÓ ENTRA NO CASO SE OS NAIPES DE TODAS AS CARTAS FOREM O MESMO
 		if (verifica == true) {
 			verifica = verificaSequencia(player);
