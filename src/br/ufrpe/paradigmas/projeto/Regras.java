@@ -45,21 +45,67 @@ public class Regras {
 		/**
 		 * PAR
 		 */
-		v = player.getValorIndex((byte)0);
-		for(byte i = 1; i < 4; i++){
-			if(v == player.getValorIndex(i)){
-				par = true;
-				if(player.getCartaRanking() == 0)
+		
+		v = player.getValorIndex((byte)0); //v recebe a primeira carta
+		byte b = 0;
+		for(byte i = 1; i < 5;){       //i recebe valores de 1 a 4, pois além da carta 0, teremos mais 4 cartas
+		    byte a = 1;                    //a variável a serve para no fim do for chamar o proximo valor de v 
+		    
+			if(v == player.getValorIndex(i)){  //se a carta v for igual a carta correspondente i
+				par = true;					   //teremos duas cartas iguais
+				a += 1;                        //incrementos a com mais 1, pois temos um par
+				
+				if(player.getCartaRanking() == 0) //se a o valor da carta ranking estiver com o valor 0 é porque não temos nenhuma ranking
+					player.setCartaRanking(v);    //e portanto setamos-a com o valor da carta v
+				
+				else 
+				{							  	
+					player.setCartaRanking(v);    //senão estiver com o valor 0, setamos com o novo valor de v
+					doisPares = true; 			  //mas teremos dois pares nas cartas, setamos dois pares como true
+					par = false;                  //e tornamos par como false
+				}
+				if(v == player.getValorIndex((byte) (i+1)) && i < 4){//podemos ter uma trinca se v tem o valor igual a posição do conteudo 
+																	 //do index i+1 e testamos se i é menor que 4, pois senão i poderia ser
+																	 //5 e o valor 5 não é valido para i.
 					player.setCartaRanking(v);
-				else {
-					doisPares = true;
-					par = false;
+					trinca = true;                                   //trinca setada como true
+					par = false; 									 //par setada como false, pois uma trinca tem valor maior 
+																	 //que um par e o que nos importa é o peso maior
+					a += 1;											 //a é incrementado pois dentro do IFs aninhados encontramos uma trinca
 					
+					if(v == player.getValorIndex((byte)(i+2)) && i < 3){//podemos ter uma quadra se v tem o valor igual a posição do  
+																		//conteudo do index i+2 e testamos se i é menor que 3, pois senão i 
+																		//poderia ser 5 e o valor 5 não é valido para i.
+						player.setCartaRanking(v);
+						quadra = true;									//quadra setada como true;
+						trinca = false;									//trinca setada como false, pois uma quadra tem valor maior 
+						 												//que um trinca e o que nos importa é o peso maior
+						a += 1;                                      //a é incrementado pois dentro do IFs aninhados encontramos uma trinca
+					}
 				}
-				if(v == player.getValorIndex((byte) (i+1))){
-					trinca = true;
-					par = false;
-				}
+			}
+			switch (a) { //switch case utilizado para incrementar i pela posição que encontramos soluções de par, trinca, quadra no codigo
+			case 2: //par
+				i += 2;
+				break;
+			case 3: //trinca
+				i += 3;
+				break;
+			case 4: //quadra
+				i += 4;
+				break;
+			default:
+				i += 1;
+				break;
+			}
+			b += a;
+			
+			if (b < 4){
+				v = player.getValorIndex(b); //proxima posição de v relativo ao valor que temos de a depois de executar o codigo for
+			}
+			//PODE USAR O BREAK NESSAS CONDIÇÕES, COMO UMA CONDIÇÃO DE PARADA
+			else{
+				break;
 			}
 		}
 		
