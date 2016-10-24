@@ -6,7 +6,7 @@ public class Player {
 
 	private byte[] valor;
 	private char[] naipe;
-	ArrayList <Maos> mao;
+	ArrayList<Maos> mao;
 	private byte cartaAlta;
 	private byte cartaRanking;
 
@@ -16,14 +16,17 @@ public class Player {
 	}
 
 	public void setMao(Maos mao) {
-		this.mao.add(mao);
+		if (this.mao.size() == 0)
+			this.mao.add(mao);
+		else
+			this.mao.set(this.mao.lastIndexOf(this.mao), mao);
 	}
-	
+
 	public byte[] getValor() {
 		return valor;
 	}
 
-	public byte getValorIndex(byte index){
+	public byte getValorIndex(byte index) {
 		return valor[index];
 	}
 
