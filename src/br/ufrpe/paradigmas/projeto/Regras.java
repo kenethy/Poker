@@ -86,12 +86,14 @@ public class Regras {
 					 * DOIS PARES FOR TRUE SIGNIFICA QUE A TRINCA É DO SEGUNDO
 					 * PAR COM ISSO, TEMOS UM PAR E UMA TRINCA (FULLHOUSE)
 					 */
-					if (doisPares)
+					if (doisPares) {
 						fullhouse = true;
-					else
+					} else {
 						trinca = true;
+					}
 					// PAR SETADA COMO FALSE, POIS UMA TRINCA TEM VALOR MAIOR
 					par = false;
+					doisPares = false;
 					// a É INCREMENTADO POIS ENCONTRAMOS UMA TRINCA
 					a += 1;
 					/**
@@ -132,6 +134,15 @@ public class Regras {
 			else
 				break;
 		}
+
+		if (par)
+			player.setMao(Maos.par);
+		else if (doisPares)
+			player.setMao(Maos.doisPares);
+		else if (trinca)
+			player.setMao(Maos.trinca);
+		else if (quadra)
+			player.setMao(Maos.quadra);
 
 		/**
 		 * SEQUÊNCIA
