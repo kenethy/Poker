@@ -1,18 +1,23 @@
 package br.ufrpe.paradigmas.projeto;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player {
 
-	private byte[] valor;
-	private char[] naipe;
+	ArrayList<Carta> carta;
 	ArrayList<Maos> mao;
 	private byte cartaAlta;
 	private byte cartaRanking;
 
 	public Player() {
-		this.valor = new byte[5];
-		this.naipe = new char[5];
+		this.carta = new ArrayList<Carta>();
+		this.mao = new ArrayList<Maos>();
+	}
+
+	public void setCarta(byte valor, char naipe) {
+		Carta c = new Carta(valor, naipe);
+		carta.add(c);
 	}
 
 	public void setMao(Maos mao) {
@@ -20,30 +25,6 @@ public class Player {
 			this.mao.add(mao);
 		else
 			this.mao.set(this.mao.lastIndexOf(this.mao), mao);
-	}
-
-	public byte[] getValor() {
-		return valor;
-	}
-
-	public byte getValorIndex(byte index) {
-		return valor[index];
-	}
-
-	public void setValor(byte valor, byte index) {
-		this.valor[index] = valor;
-	}
-
-	public char[] getNaipe() {
-		return naipe;
-	}
-
-	public char getNaipeIndex(byte index) {
-		return naipe[index];
-	}
-
-	public void setNaipe(char naipe, byte index) {
-		this.naipe[index] = naipe;
 	}
 
 	public byte getCartaAlta() {
@@ -60,5 +41,12 @@ public class Player {
 
 	public void setCartaRanking(byte cartaRanking) {
 		this.cartaRanking = cartaRanking;
+	}
+
+	public void printMao() throws IOException {
+		for (Carta carta2 : carta) {
+			System.out.print(carta2.getValor() + "" + carta2.getNaipe() + " ");
+		}
+		System.out.println();
 	}
 }

@@ -15,9 +15,9 @@ public class Regras {
 
 	// VERIFICA SE TODAS AS CARTAS POSSUEM NAIPES IGUAIS
 	public boolean verificaNaipes(Player player) {
-		this.naipe = player.getNaipeIndex((byte) 0);
+		this.naipe = player.carta.get(0).getNaipe();
 		for (byte i = 1; i < 5; i++) {
-			if (this.naipe != player.getNaipeIndex(i))
+			if (this.naipe != player.carta.get(i).getNaipe())
 				return false;
 		}
 		return true;
@@ -25,11 +25,11 @@ public class Regras {
 
 	// VERIFICA SE EXISTE UMA SEQUÊNCIA
 	public boolean verificaSequencia(Player player) {
-		v = player.getValorIndex((byte) 0); // PEGA O 1º VALOR
+		v = player.carta.get(0).getValor(); // PEGA O 1º VALOR
 		for (byte i = 1; i < 5; i++) {
 			// COMPARA COM O VALOR SEGUINTE A SOMA DE 1
-			if ((v + 1) == player.getValorIndex(i))
-				v = player.getValorIndex(i); // CASO SEQUENCIE O SETA VALOR A v
+			if ((v + 1) == player.carta.get(i).getValor())
+				v = player.carta.get(i).getValor(); // CASO SEQUENCIE O SETA VALOR A v
 			else
 				return false; // CASO NÃO, RETURN FALSE
 		}
@@ -42,13 +42,13 @@ public class Regras {
 		/**
 		 * CARTA ALTA
 		 */
-		player.setCartaAlta(player.getValorIndex((byte) 4));
+		player.setCartaAlta(player.carta.get(4).getValor());
 		player.setMao(Maos.cartaAlta);
 
 		/**
 		 * PAR * DOIS PARES * TRINCA * QUADRA
 		 */
-		v = player.getValorIndex((byte) 0); // RECEBE A PRIMEIRA CARTA
+		v = player.carta.get(0).getValor(); // RECEBE A PRIMEIRA CARTA
 		byte b = 0;
 		for (byte i = 1; i < 5;) {
 			// A VARIÁVEL A SERVE PARA NO FIM DO FOR CHAMAR O PROXIMO VALOR DE V
@@ -57,7 +57,7 @@ public class Regras {
 			/**
 			 * PAR
 			 */
-			if (v == player.getValorIndex(i)) {
+			if (v == player.carta.get(i).getValor()) {
 				// SE V IGUAL A CARTA SEGUINTE TEREMOS DUAS CARTAS IGUAIS
 				par = true;
 				a += 1;
@@ -80,7 +80,7 @@ public class Regras {
 				 * TRINCA
 				 */
 				// PODEMOS TER UMA TRINCA
-				if (v == player.getValorIndex((byte) (i + 1)) && i < 4) {
+				if (v == player.carta.get(i+1).getValor() && i < 4) {
 					player.setCartaRanking(v);
 					/**
 					 * DOIS PARES FOR TRUE SIGNIFICA QUE A TRINCA É DO SEGUNDO
@@ -100,7 +100,7 @@ public class Regras {
 					 * QUADRA
 					 */
 					// PODEMOS TER UMA QUADRA
-					if (v == player.getValorIndex((byte) (i + 2)) && i < 3 && !fullhouse) {
+					if (v == player.carta.get(i+2).getValor() && i < 3 && !fullhouse) {
 						player.setCartaRanking(v);
 						quadra = true;
 						// TRINCA RECEBE FALSE, POIS UMA QUADRA TEM VALOR MAIOR
@@ -129,7 +129,7 @@ public class Regras {
 			b += a;
 			if (b < 4)
 				// PROXIMA POSIÇÃO DE V RELATIVO AO VALOR QUE TEMOS DE a
-				v = player.getValorIndex(b);
+				v = player.carta.get(b).getValor();
 			// PODE USAR O BREAK NESSAS CONDIÇÕES, COMO UMA CONDIÇÃO DE PARADA
 			else
 				break;
@@ -184,11 +184,11 @@ public class Regras {
 		verifica = verificaNaipes(player);
 		// SE TODOS OS NAIPES IGUAIS, VERIFICA SE SEQUÊNCIA É (A, K, Q, J, T)
 		if (verifica == true) {
-			if (player.getValorIndex((byte) 4) == 14)
-				if (player.getValorIndex((byte) 3) == 13)
-					if (player.getValorIndex((byte) 2) == 12)
-						if (player.getValorIndex((byte) 1) == 11)
-							if (player.getValorIndex((byte) 0) == 10)
+			if (player.carta.get(4).getValor() == 14)
+				if (player.carta.get(3).getValor() == 13)
+					if (player.carta.get(2).getValor() == 12)
+						if (player.carta.get(1).getValor() == 11)
+							if (player.carta.get(0).getValor() == 10)
 								player.setMao(Maos.royalFlush);
 		}
 	}
