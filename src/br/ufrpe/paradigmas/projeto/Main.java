@@ -13,10 +13,13 @@ public class Main {
 	private static PrintWriter out;
 
 	public static void main(String[] args) throws IOException {
+		
+		// TEMPO DO PROGRAMA
+		long tempoInicial = System.currentTimeMillis();
 
 		// CRIAÇÃO DOS ARQUIVOS DE LEITURA E ESCRITA
-		in = new BufferedReader(new FileReader("ArquivosEntrada/pokerK.txt"));
-		out = new PrintWriter(new FileWriter("ArquivosEntrada/pokerK_out.txt"));
+		in = new BufferedReader(new FileReader("ArquivosEntrada/pokerM.txt"));
+		out = new PrintWriter(new FileWriter("ArquivosEntrada/pokerM_out.txt"));
 
 		// JOGADORES
 		Player p1 = new Player();
@@ -24,7 +27,7 @@ public class Main {
 
 		String poker = in.readLine();
 		byte value;
-		int rodada = 1;
+		int vitoriasP1 = 0;
 
 		do {
 			for (byte i = 0; i < poker.length(); i++) {
@@ -47,11 +50,9 @@ public class Main {
 			Collections.sort(p2.carta, new ComparadorDeCartas());
 
 			// EXECUÇÃO DA VERIFICAÇÃO DAS MAÕS DE POKER
-			out.println("JOGO " + rodada++);
 			p1.ranking.rankingMao(p1);
 			p2.ranking.rankingMao(p2);
-
-			verificaVencedor(p1, p2, out);
+			vitoriasP1 += verificaVencedor(p1, p2);
 
 			// LIMPEZA DO ARRAY PARA NOVAS PARTIDAS
 			p1 = new Player();
@@ -59,54 +60,44 @@ public class Main {
 
 			// LEITURA DA PRÓXIMA LINHA DO ARQUIVO
 			poker = in.readLine();
+			
 		} while (poker != null);
+		
+		out.println(vitoriasP1);
+		out.print(System.currentTimeMillis() - tempoInicial);
+		out.close();
 	}
-
+	
 	// VERIFICAÇÃO DA MÃO VENCEDORA
-	public static void verificaVencedor(Player p1, Player p2, PrintWriter out) {
+	public static byte verificaVencedor(Player p1, Player p2) {
 		byte cardP1 = (byte) p1.mao.get(p1.mao.size() - 1).ordinal();
 		byte cardP2 = (byte) p2.mao.get(p2.mao.size() - 1).ordinal();
 
-		// JOGADOR 1
-		out.print("Mão Player 1: " + p1.mao.toString() + "\nCartas: ");
-		for (Carta card : p1.carta) {
-			out.print(card.getValor() + "" + card.getNaipe() + " ");
-		}
-		out.println("\nCarta Ranking: " + p1.getCartaRanking());
-		out.println("Carta Alta: " + p1.getCartaAlta());
-		out.println();
-		// JOGADOR 2
-		out.print("Mão Player 2: " + p2.mao.toString() + "\nCartas: ");
-		for (Carta card : p2.carta) {
-			out.print(card.getValor() + "" + card.getNaipe() + " ");
-		}
-		out.println("\nCarta Ranking: " + p2.getCartaRanking());
-		out.println("Carta Alta: " + p2.getCartaAlta());
-		out.println();
-
+		// RANKING DE MÃOS
 		if (cardP1 > cardP2)
-			out.println("Vencedor: Player 1");
+			return 1;
 		else if (cardP1 < cardP2)
-			out.println("Vencedor: Player 2");
-
-		else if (p1.getCartaRanking() > p2.getCartaRanking())
-			out.println("Vencedor: Player 1");
-		else if (p1.getCartaRanking() < p2.getCartaRanking())
-			out.println("Vencedor: Player 2");
-
-		else if (p1.getCartaAlta() > p2.getCartaAlta())
-			out.println("Vencedor: Player 1");
-		else if (p1.getCartaAlta() < p2.getCartaAlta())
-			out.println("Vencedor: Player 2");
-
-		else if (p1.getKicker() > p2.getKicker())
-			out.println("Vencedor: Player 1");
-		else if (p1.getKicker() < p2.getKicker())
-			out.println("Vencedor: Player 2");
+			return 0;
 		
-		else
-			out.println("Empate");
-		out.println();
+		// VALOR DA CARTA DO RANKING DE MÃOS
+		else if (p1.getCartaRanking() > p2.getCartaRanking())
+			return 1;
+		else if (p1.getCartaRanking() < p2.getCartaRanking())
+			return 0;
+
+		// VALOR DA CARTA MAIOR
+		else if (p1.getCartaAlta() > p2.getCartaAlta())
+			return 1;
+		else if (p1.getCartaAlta() < p2.getCartaAlta())
+			return 0;
+
+		// VALOR DA CARTA DESEMPATE
+		else if (p1.getKicker() > p2.getKicker())
+			return 1;
+		else if (p1.getKicker() < p2.getKicker())
+			return 0;
+		// CASO EMPATE
+		return 0;
 
 	}
 
@@ -134,5 +125,26 @@ public class Main {
 			number = (byte) Character.getNumericValue(c);
 		}
 		return number;
+	}
+
+	// IMPRESSÃO DAS INFORMAÇÕES DOS JOGADORES
+	public static void printJogadores(Player p1, Player p2, PrintWriter out) {
+		// JOGADOR 1
+		out.print("Mão Player 1: " + p1.mao.toString() + "\nCartas: ");
+		for (Carta card : p1.carta) {
+			out.print(card.getValor() + "" + card.getNaipe() + " ");
+		}
+		out.println("\nCarta Ranking: " + p1.getCartaRanking());
+		out.println("Carta Alta: " + p1.getCartaAlta());
+		out.println();
+
+		// JOGADOR 2
+		out.print("Mão Player 2: " + p2.mao.toString() + "\nCartas: ");
+		for (Carta card : p2.carta) {
+			out.print(card.getValor() + "" + card.getNaipe() + " ");
+		}
+		out.println("\nCarta Ranking: " + p2.getCartaRanking());
+		out.println("Carta Alta: " + p2.getCartaAlta());
+		out.println();
 	}
 }

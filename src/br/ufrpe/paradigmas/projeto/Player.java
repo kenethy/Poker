@@ -43,13 +43,6 @@ public class Player {
 		this.cartaRanking = cartaRanking;
 	}
 
-	public void printMao() throws IOException {
-		for (Carta carta2 : carta) {
-			System.out.print(carta2.getValor() + "" + carta2.getNaipe() + " ");
-		}
-		System.out.println();
-	}
-
 	public byte getKicker() {
 		return kicker;
 	}
@@ -57,4 +50,11 @@ public class Player {
 	public void setKicker(byte kicker) {
 		this.kicker = kicker;
 	}
+	
+//	public void printMao() throws IOException {
+//		for (Carta carta2 : carta) {
+//			System.out.print(carta2.getValor() + "" + carta2.getNaipe() + " ");
+//		}
+//		System.out.println();
+//	}
 }
