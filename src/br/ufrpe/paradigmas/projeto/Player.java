@@ -9,10 +9,12 @@ public class Player {
 	ArrayList<Maos> mao;
 	private byte cartaAlta;
 	private byte cartaRanking;
+	Regras ranking;
 
 	public Player() {
 		this.carta = new ArrayList<Carta>();
 		this.mao = new ArrayList<Maos>();
+		this.ranking = new Regras();
 	}
 
 	public void setCarta(byte valor, char naipe) {
@@ -21,10 +23,7 @@ public class Player {
 	}
 
 	public void setMao(Maos mao) {
-		if (this.mao.size() == 0)
-			this.mao.add(mao);
-		else
-			this.mao.set(this.mao.lastIndexOf(this.mao), mao);
+		this.mao.add(mao);
 	}
 
 	public byte getCartaAlta() {

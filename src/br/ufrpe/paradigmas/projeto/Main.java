@@ -24,10 +24,11 @@ public class Main {
 
 		String poker = in.readLine();
 		byte value;
-		
+		int rodada = 1;
+
 		do {
 			for (byte i = 0; i < poker.length(); i++) {
-				//INSERÇÃO DAS CARTAS DO PRIMEIRO JOGADOR
+				// INSERÇÃO DAS CARTAS DO PRIMEIRO JOGADOR
 				if (i < poker.length() / 2) {
 					// VERIFICAÇÃO DO TIPO DE CARTA (A, K, Q, J ,T)
 					value = verificaNumero(poker.charAt(i++));
@@ -40,21 +41,34 @@ public class Main {
 					p2.setCarta(value, poker.charAt(i++));
 				}
 			}
-			
+
 			// ORDENAÇÃO DAS CARTAS DOS JOGADORES
 			Collections.sort(p1.carta, new ComparadorDeCartas());
 			Collections.sort(p2.carta, new ComparadorDeCartas());
-			
-			p1.printMao();
-			p2.printMao();
-			System.out.println();
-			p1.carta.clear();
-			p2.carta.clear();
-			
+
+			// EXECUÇÃO DA VERIFICAÇÃO DAS MAÕS DE POKER
+			System.out.println("JOGO " + rodada++);
+			p1.ranking.rankingMao(p1);
+			p2.ranking.rankingMao(p2);
+
+			// System.out.println(p1.mao.toString());
+			// System.out.println(p2.mao.toString());
+			//
+			// System.out.println(p1.mao.get(p1.mao.size()-1).ordinal());
+			// System.out.println(p2.mao.get(p2.mao.size()-1).ordinal());
+
+			// LIMPEZA DO ARRAY PARA NOVAS PARTIDAS
+			p1 = new Player();
+			p2 = new Player();
+
 			// LEITURA DA PRÓXIMA LINHA DO ARQUIVO
 			poker = in.readLine();
-
 		} while (poker != null);
+	}
+
+	// VERIFICAÇÃO DA MÃO VENCEDORA
+	public void verificaVencedor(){
+		
 	}
 
 	// FUNÇÃO PARA ADICIONAR O VALOR REAL DAS CARTAS (A, K, Q, J, T)

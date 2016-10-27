@@ -11,7 +11,15 @@ public class Regras {
 	private boolean doisPares = false;
 	private boolean trinca = false;
 	private boolean quadra = false;
+	private boolean sequencia = false;
 	private boolean fullhouse = false;
+	private boolean flush = false;
+	private boolean straight = false;
+	private boolean royal = false;
+
+	public Regras() {
+
+	}
 
 	// VERIFICA SE TODAS AS CARTAS POSSUEM NAIPES IGUAIS
 	public boolean verificaNaipes(Player player) {
@@ -46,7 +54,7 @@ public class Regras {
 		player.setMao(Maos.cartaAlta);
 
 		/**
-		 * PAR * DOIS PARES * TRINCA * QUADRA
+		 * PAR * DOIS PARES * TRINCA * QUADRA * FULLHOUSE
 		 */
 		v = player.carta.get(0).getValor(); // RECEBE A PRIMEIRA CARTA
 		byte b = 0;
@@ -80,7 +88,7 @@ public class Regras {
 				 * TRINCA
 				 */
 				// PODEMOS TER UMA TRINCA
-				if (v == player.carta.get(i+1).getValor() && i < 4) {
+				if (i < 4 && v == player.carta.get(i + 1).getValor()) {
 					player.setCartaRanking(v);
 					/**
 					 * DOIS PARES FOR TRUE SIGNIFICA QUE A TRINCA É DO SEGUNDO
@@ -100,7 +108,7 @@ public class Regras {
 					 * QUADRA
 					 */
 					// PODEMOS TER UMA QUADRA
-					if (v == player.carta.get(i+2).getValor() && i < 3 && !fullhouse) {
+					if (i < 3 && !fullhouse && v == player.carta.get(i + 2).getValor()) {
 						player.setCartaRanking(v);
 						quadra = true;
 						// TRINCA RECEBE FALSE, POIS UMA QUADRA TEM VALOR MAIOR
@@ -135,15 +143,6 @@ public class Regras {
 				break;
 		}
 
-		if (par)
-			player.setMao(Maos.par);
-		else if (doisPares)
-			player.setMao(Maos.doisPares);
-		else if (trinca)
-			player.setMao(Maos.trinca);
-		else if (quadra)
-			player.setMao(Maos.quadra);
-
 		/**
 		 * SEQUÊNCIA
 		 */
@@ -151,7 +150,7 @@ public class Regras {
 		verifica = verificaSequencia(player);
 		// SE A VERIFICA INDICAR UMA SEQUENCIA
 		if (verifica && !fullhouse)
-			player.setMao(Maos.sequencia);
+			sequencia = true;
 
 		/**
 		 * FLUSH
@@ -159,23 +158,20 @@ public class Regras {
 		// VERIFICA SE OS NAIPES SAO IGUAIS, SE SIM INDICA QUE EXISTE UM FLUSH
 		verifica = verificaNaipes(player);
 		if (verifica && !fullhouse)
-			player.setMao(Maos.flush);
-
-		/**
-		 * FULL HOUSE (UM PAR E UMA TRINCA)
-		 */
-		if (fullhouse)
-			player.setMao(Maos.fullHouse);
+			flush = true;
 
 		/**
 		 * STRAIGHT FLUSH
 		 */
 		// SÓ ENTRA NO CASO SE OS NAIPES DE TODAS AS CARTAS FOREM O MESMO
-		if (verifica == true) {
+		if (verifica) {
 			verifica = verificaSequencia(player);
 			// SE A COMPARAÇÃO INDICAR UMA SEQUENCIA RETORNA STRAIGHT FLUSH
-			if (verifica == true)
-				player.setMao(Maos.straightFlush);
+			if (verifica) {
+				straight = true;
+				flush = false;
+				fullhouse = false;
+			}
 		}
 
 		/**
@@ -183,13 +179,35 @@ public class Regras {
 		 */
 		verifica = verificaNaipes(player);
 		// SE TODOS OS NAIPES IGUAIS, VERIFICA SE SEQUÊNCIA É (A, K, Q, J, T)
-		if (verifica == true) {
+		if (verifica) {
 			if (player.carta.get(4).getValor() == 14)
 				if (player.carta.get(3).getValor() == 13)
 					if (player.carta.get(2).getValor() == 12)
 						if (player.carta.get(1).getValor() == 11)
-							if (player.carta.get(0).getValor() == 10)
-								player.setMao(Maos.royalFlush);
+							if (player.carta.get(0).getValor() == 10) {
+								royal = true;
+								straight = false;
+							}
 		}
+		
+		// VERIFICAÇÃO PARA ADICIONAR O RANKING DA MÃO DO JOGADOR
+		if(royal)
+			player.setMao(Maos.royalFlush);
+		else if (straight)
+			player.setMao(Maos.straightFlush);
+		else if (quadra)
+			player.setMao(Maos.quadra);
+		else if (fullhouse)
+			player.setMao(Maos.fullHouse);
+		else if (flush)
+			player.setMao(Maos.flush);
+		else if (sequencia)
+			player.setMao(Maos.sequencia);
+		else if (trinca)
+			player.setMao(Maos.trinca);
+		else if (doisPares)
+			player.setMao(Maos.doisPares);
+		else if (par)
+			player.setMao(Maos.par);		
 	}
 }
