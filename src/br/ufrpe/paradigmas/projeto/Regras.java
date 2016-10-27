@@ -36,8 +36,8 @@ public class Regras {
 		v = player.carta.get(0).getValor(); // PEGA O 1º VALOR
 		for (byte i = 1; i < 5; i++) {
 			// COMPARA COM O VALOR SEGUINTE A SOMA DE 1
-			if ((v + 1) == player.carta.get(i).getValor())
-				v = player.carta.get(i).getValor(); // CASO SEQUENCIE O SETA VALOR A v
+			if ((v + 1) == player.carta.get(i).getValor()) // CASO SEQUENCIE
+				v = player.carta.get(i).getValor(); // SETA VALOR A v
 			else
 				return false; // CASO NÃO, RETURN FALSE
 		}
@@ -58,6 +58,7 @@ public class Regras {
 		 */
 		v = player.carta.get(0).getValor(); // RECEBE A PRIMEIRA CARTA
 		byte b = 0;
+
 		for (byte i = 1; i < 5;) {
 			// A VARIÁVEL A SERVE PARA NO FIM DO FOR CHAMAR O PROXIMO VALOR DE V
 			byte a = 1;
@@ -77,8 +78,17 @@ public class Regras {
 				if (player.getCartaRanking() == 0)
 					player.setCartaRanking(v);
 				else {
+					// COLOCA O VALOR DO PAR ANTERIOR NA CARTA RANKIN
+					player.setCartaAlta(player.getCartaRanking());
+
 					// SE NÃO FOR 0, SETAMOS COM O NOVO VALOR DE v
 					player.setCartaRanking(v);
+
+					for (Carta card : player.carta) {
+						if (v != card.getValor() && card.getValor() != player.getCartaAlta())
+							player.setKicker(card.getValor());
+					}
+
 					// MAS TEREMOS DOIS PARES NAS CARTAS, SETAMOS DOIS PARES
 					doisPares = true;
 					par = false; // DOIS PARES TEM VALOR MAIOR
@@ -87,19 +97,34 @@ public class Regras {
 				/**
 				 * TRINCA
 				 */
-				// PODEMOS TER UMA TRINCA
+				// PODEMOS TER UMA TRINCA OU UM FULLHOUSE
 				if (i < 4 && v == player.carta.get(i + 1).getValor()) {
-					player.setCartaRanking(v);
 					/**
 					 * DOIS PARES FOR TRUE SIGNIFICA QUE A TRINCA É DO SEGUNDO
 					 * PAR COM ISSO, TEMOS UM PAR E UMA TRINCA (FULLHOUSE)
 					 */
 					if (doisPares) {
 						fullhouse = true;
+						// SETANDO CARTA ALTA COM O VALOR DO PAR
+						// E CARTA RANKING COM O VALOR DA TRINCA
+						player.setCartaAlta(player.getCartaRanking());
+						player.setCartaRanking(v);
+
 					} else {
+						// SETA CARTA RANKING COM O VALOR DA TRINCA
+						player.setCartaRanking(v);
 						trinca = true;
+
+						// VERIFICA A MAIOR CARTA DIFERENTE DA TRINCA
+						for (byte index = 4; index >= 0; index--) {
+							if (v != player.carta.get(index).getValor()) {
+								player.setCartaAlta(player.carta.get(index).getValor());
+								index = -1;
+							}
+						}
 					}
-					// PAR SETADA COMO FALSE, POIS UMA TRINCA TEM VALOR MAIOR
+					// PAR E DOIS PARES SETADA COMO FALSE
+					// POIS UMA TRINCA OU FULLHOUSE TEM VALOR MAIOR
 					par = false;
 					doisPares = false;
 					// a É INCREMENTADO POIS ENCONTRAMOS UMA TRINCA
@@ -109,8 +134,16 @@ public class Regras {
 					 */
 					// PODEMOS TER UMA QUADRA
 					if (i < 3 && !fullhouse && v == player.carta.get(i + 2).getValor()) {
+						// VERIFICAÇÃO DA CARTA QUE É DIFERENTE NA QUADRA
+						for (Carta card : player.carta) {
+							if (v != card.getValor())
+								player.setCartaAlta(card.getValor());
+						}
+
+						// CARTA RANKING COM VALOR DA QUADRA
 						player.setCartaRanking(v);
 						quadra = true;
+
 						// TRINCA RECEBE FALSE, POIS UMA QUADRA TEM VALOR MAIOR
 						trinca = false;
 						// a É INCREMENTADO POIS ENCONTRAMOS UMA TRINCA
@@ -138,7 +171,7 @@ public class Regras {
 			if (b < 4)
 				// PROXIMA POSIÇÃO DE V RELATIVO AO VALOR QUE TEMOS DE a
 				v = player.carta.get(b).getValor();
-			// PODE USAR O BREAK NESSAS CONDIÇÕES, COMO UMA CONDIÇÃO DE PARADA
+			// BREAK COMO UMA CONDIÇÃO DE PARADA DO LAÇO
 			else
 				break;
 		}
@@ -151,7 +184,6 @@ public class Regras {
 		// SE A VERIFICA INDICAR UMA SEQUENCIA
 		if (verifica && !fullhouse)
 			sequencia = true;
-
 		/**
 		 * FLUSH
 		 */
@@ -166,11 +198,11 @@ public class Regras {
 		// SÓ ENTRA NO CASO SE OS NAIPES DE TODAS AS CARTAS FOREM O MESMO
 		if (verifica) {
 			verifica = verificaSequencia(player);
-			// SE A COMPARAÇÃO INDICAR UMA SEQUENCIA RETORNA STRAIGHT FLUSH
+			// SE A COMPARAÇÃO INDICAR UMA SEQUENCIA STRAIGHT FLUSH TRUE
 			if (verifica) {
 				straight = true;
-				flush = false;
-				fullhouse = false;
+				flush = false; // FALSE PARA FLUSH
+				fullhouse = false; // FALSE PARA FULLHOUSE
 			}
 		}
 
@@ -186,12 +218,12 @@ public class Regras {
 						if (player.carta.get(1).getValor() == 11)
 							if (player.carta.get(0).getValor() == 10) {
 								royal = true;
-								straight = false;
+								straight = false; // FALSE PARA O STRAIGHT FLUSH
 							}
 		}
-		
+
 		// VERIFICAÇÃO PARA ADICIONAR O RANKING DA MÃO DO JOGADOR
-		if(royal)
+		if (royal)
 			player.setMao(Maos.royalFlush);
 		else if (straight)
 			player.setMao(Maos.straightFlush);
@@ -208,6 +240,6 @@ public class Regras {
 		else if (doisPares)
 			player.setMao(Maos.doisPares);
 		else if (par)
-			player.setMao(Maos.par);		
+			player.setMao(Maos.par);
 	}
 }

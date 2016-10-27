@@ -7,9 +7,10 @@ public class Player {
 
 	ArrayList<Carta> carta;
 	ArrayList<Maos> mao;
+	Regras ranking;
 	private byte cartaAlta;
 	private byte cartaRanking;
-	Regras ranking;
+	private byte kicker;
 
 	public Player() {
 		this.carta = new ArrayList<Carta>();
@@ -47,5 +48,13 @@ public class Player {
 			System.out.print(carta2.getValor() + "" + carta2.getNaipe() + " ");
 		}
 		System.out.println();
+	}
+
+	public byte getKicker() {
+		return kicker;
+	}
+
+	public void setKicker(byte kicker) {
+		this.kicker = kicker;
 	}
 }

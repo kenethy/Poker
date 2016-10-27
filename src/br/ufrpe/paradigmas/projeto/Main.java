@@ -47,15 +47,11 @@ public class Main {
 			Collections.sort(p2.carta, new ComparadorDeCartas());
 
 			// EXECUÇÃO DA VERIFICAÇÃO DAS MAÕS DE POKER
-			System.out.println("JOGO " + rodada++);
+			out.println("JOGO " + rodada++);
 			p1.ranking.rankingMao(p1);
 			p2.ranking.rankingMao(p2);
 
-			// System.out.println(p1.mao.toString());
-			// System.out.println(p2.mao.toString());
-			//
-			// System.out.println(p1.mao.get(p1.mao.size()-1).ordinal());
-			// System.out.println(p2.mao.get(p2.mao.size()-1).ordinal());
+			verificaVencedor(p1, p2, out);
 
 			// LIMPEZA DO ARRAY PARA NOVAS PARTIDAS
 			p1 = new Player();
@@ -67,8 +63,51 @@ public class Main {
 	}
 
 	// VERIFICAÇÃO DA MÃO VENCEDORA
-	public void verificaVencedor(){
+	public static void verificaVencedor(Player p1, Player p2, PrintWriter out) {
+		byte cardP1 = (byte) p1.mao.get(p1.mao.size() - 1).ordinal();
+		byte cardP2 = (byte) p2.mao.get(p2.mao.size() - 1).ordinal();
+
+		// JOGADOR 1
+		out.print("Mão Player 1: " + p1.mao.toString() + "\nCartas: ");
+		for (Carta card : p1.carta) {
+			out.print(card.getValor() + "" + card.getNaipe() + " ");
+		}
+		out.println("\nCarta Ranking: " + p1.getCartaRanking());
+		out.println("Carta Alta: " + p1.getCartaAlta());
+		out.println();
+		// JOGADOR 2
+		out.print("Mão Player 2: " + p2.mao.toString() + "\nCartas: ");
+		for (Carta card : p2.carta) {
+			out.print(card.getValor() + "" + card.getNaipe() + " ");
+		}
+		out.println("\nCarta Ranking: " + p2.getCartaRanking());
+		out.println("Carta Alta: " + p2.getCartaAlta());
+		out.println();
+
+		if (cardP1 > cardP2)
+			out.println("Vencedor: Player 1");
+		else if (cardP1 < cardP2)
+			out.println("Vencedor: Player 2");
+
+		else if (p1.getCartaRanking() > p2.getCartaRanking())
+			out.println("Vencedor: Player 1");
+		else if (p1.getCartaRanking() < p2.getCartaRanking())
+			out.println("Vencedor: Player 2");
+
+		else if (p1.getCartaAlta() > p2.getCartaAlta())
+			out.println("Vencedor: Player 1");
+		else if (p1.getCartaAlta() < p2.getCartaAlta())
+			out.println("Vencedor: Player 2");
+
+		else if (p1.getKicker() > p2.getKicker())
+			out.println("Vencedor: Player 1");
+		else if (p1.getKicker() < p2.getKicker())
+			out.println("Vencedor: Player 2");
 		
+		else
+			out.println("Empate");
+		out.println();
+
 	}
 
 	// FUNÇÃO PARA ADICIONAR O VALOR REAL DAS CARTAS (A, K, Q, J, T)
