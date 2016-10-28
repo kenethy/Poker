@@ -25,8 +25,8 @@ public class Main {
 		long tempoInicial = System.currentTimeMillis();
 
 		// CRIAÇÃO DOS ARQUIVOS DE LEITURA E ESCRITA
-		in = new BufferedReader(new FileReader("ArquivosEntrada/pokerM.txt"));
-		out = new PrintWriter(new FileWriter("ArquivosEntrada/pokerM_out.txt"));
+		in = new BufferedReader(new FileReader("ArquivosEntrada/pokerK.txt"));
+		out = new PrintWriter(new FileWriter("ArquivosEntrada/pokerK_out.txt"));
 
 		// JOGADORES
 		Player p1 = new Player();
@@ -60,6 +60,9 @@ public class Main {
 			p1.ranking.rankingMao(p1);
 			p2.ranking.rankingMao(p2);
 			vitoriasP1 += verificaVencedor(p1, p2);
+			
+			// IMPRESSAO DAS INFORMAÇÕES DOS JOGADORES
+			printJogadores(p1, p2);
 
 			// LIMPEZA DO ARRAY PARA NOVAS PARTIDAS
 			p1 = new Player();
