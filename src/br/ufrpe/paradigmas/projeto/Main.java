@@ -147,6 +147,7 @@ public class Main {
 		}
 		System.out.println("\nCarta Ranking: " + p1.getCartaRanking());
 		System.out.println("Carta Alta: " + p1.getCartaAlta());
+		System.out.println("Carta Kicker: " + p1.getKicker());
 		System.out.println();
 
 		// JOGADOR 2
@@ -156,6 +157,7 @@ public class Main {
 		}
 		System.out.println("\nCarta Ranking: " + p2.getCartaRanking());
 		System.out.println("Carta Alta: " + p2.getCartaAlta());
+		System.out.println("Carta Kicker: " + p2.getKicker());
 		System.out.println();
 	}
 }
