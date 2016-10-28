@@ -97,7 +97,6 @@ public class Main {
 		else if (p1.getKicker() < p2.getKicker())
 			return 0;
 		// CASO EMPATE
-		return 0;
 
 	}
 
