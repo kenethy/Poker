@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 
+/**
+ * VERSÃO 2 - POKER 
+ * - ALTERADOS ATRIBUTOS DO TIPO BYTE PARA TIPO INT
+ * 
+ * @author KENEDY FELIPE - MARCOS INACIO
+ *
+ */
 public class Main {
 
 	private static BufferedReader in;
@@ -26,11 +33,11 @@ public class Main {
 		Player p2 = new Player();
 
 		String poker = in.readLine();
-		byte value;
+		int value;
 		int vitoriasP1 = 0;
 
 		do {
-			for (byte i = 0; i < poker.length(); i++) {
+			for (int i = 0; i < poker.length(); i++) {
 				// INSERÇÃO DAS CARTAS DO PRIMEIRO JOGADOR
 				if (i < poker.length() / 2) {
 					// VERIFICAÇÃO DO TIPO DE CARTA (A, K, Q, J ,T)
@@ -69,9 +76,9 @@ public class Main {
 	}
 	
 	// VERIFICAÇÃO DA MÃO VENCEDORA
-	public static byte verificaVencedor(Player p1, Player p2) {
-		byte cardP1 = (byte) p1.mao.get(p1.mao.size() - 1).ordinal();
-		byte cardP2 = (byte) p2.mao.get(p2.mao.size() - 1).ordinal();
+	public static int verificaVencedor(Player p1, Player p2) {
+		int cardP1 = (int) p1.mao.get(p1.mao.size() - 1).ordinal();
+		int cardP2 = (int) p2.mao.get(p2.mao.size() - 1).ordinal();
 
 		// RANKING DE MÃOS
 		if (cardP1 > cardP2)
@@ -96,14 +103,15 @@ public class Main {
 			return 1;
 		else if (p1.getKicker() < p2.getKicker())
 			return 0;
+		
 		// CASO EMPATE
 		return 0;
 
 	}
 
 	// FUNÇÃO PARA ADICIONAR O VALOR REAL DAS CARTAS (A, K, Q, J, T)
-	private static byte verificaNumero(char c) {
-		byte number = 0;
+	private static int verificaNumero(char c) {
+		int number = 0;
 
 		switch (c) {
 		case 'A':
@@ -122,7 +130,7 @@ public class Main {
 			number = 10;
 			break;
 		default:
-			number = (byte) Character.getNumericValue(c);
+			number = Character.getNumericValue(c);
 		}
 		return number;
 	}

@@ -5,7 +5,7 @@ package br.ufrpe.paradigmas.projeto;
 public class Regras {
 
 	private boolean verifica;
-	private static byte v;
+	private static int v;
 	private char naipe;
 	private boolean par = false;
 	private boolean doisPares = false;
@@ -24,7 +24,7 @@ public class Regras {
 	// VERIFICA SE TODAS AS CARTAS POSSUEM NAIPES IGUAIS
 	public boolean verificaNaipes(Player player) {
 		this.naipe = player.carta.get(0).getNaipe();
-		for (byte i = 1; i < 5; i++) {
+		for (int i = 1; i < 5; i++) {
 			if (this.naipe != player.carta.get(i).getNaipe())
 				return false;
 		}
@@ -34,7 +34,7 @@ public class Regras {
 	// VERIFICA SE EXISTE UMA SEQUÊNCIA
 	public boolean verificaSequencia(Player player) {
 		v = player.carta.get(0).getValor(); // PEGA O 1º VALOR
-		for (byte i = 1; i < 5; i++) {
+		for (int i = 1; i < 5; i++) {
 			// COMPARA COM O VALOR SEGUINTE A SOMA DE 1
 			if ((v + 1) == player.carta.get(i).getValor()) // CASO SEQUENCIE
 				v = player.carta.get(i).getValor(); // SETA VALOR A v
@@ -57,11 +57,11 @@ public class Regras {
 		 * PAR * DOIS PARES * TRINCA * QUADRA * FULLHOUSE
 		 */
 		v = player.carta.get(0).getValor(); // RECEBE A PRIMEIRA CARTA
-		byte b = 0;
+		int b = 0;
 
-		for (byte i = 1; i < 5;) {
+		for (int i = 1; i < 5;) {
 			// A VARIÁVEL A SERVE PARA NO FIM DO FOR CHAMAR O PROXIMO VALOR DE V
-			byte a = 1;
+			int a = 1;
 
 			/**
 			 * PAR
@@ -116,7 +116,7 @@ public class Regras {
 						trinca = true;
 
 						// VERIFICA A MAIOR CARTA DIFERENTE DA TRINCA
-						for (byte index = 4; index >= 0; index--) {
+						for (int index = 4; index >= 0; index--) {
 							if (v != player.carta.get(index).getValor()) {
 								player.setCartaAlta(player.carta.get(index).getValor());
 								index = -1;

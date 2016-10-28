@@ -2,19 +2,19 @@ package br.ufrpe.paradigmas.projeto;
 
 public class Carta {
 
-	private byte valor;
+	private int valor;
 	private char naipe;
 	
-	Carta(byte valor, char naipe){
+	Carta(int valor, char naipe){
 		this.setValor(valor);
 		this.setNaipe(naipe);
 	}
 
-	public byte getValor() {
+	public int getValor() {
 		return valor;
 	}
 
-	public void setValor(byte valor) {
+	public void setValor(int valor) {
 		this.valor = valor;
 	}
 

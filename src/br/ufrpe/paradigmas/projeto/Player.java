@@ -8,9 +8,9 @@ public class Player {
 	ArrayList<Carta> carta;
 	ArrayList<Maos> mao;
 	Regras ranking;
-	private byte cartaAlta;
-	private byte cartaRanking;
-	private byte kicker;
+	private int cartaAlta;
+	private int cartaRanking;
+	private int kicker;
 
 	public Player() {
 		this.carta = new ArrayList<Carta>();
@@ -18,7 +18,7 @@ public class Player {
 		this.ranking = new Regras();
 	}
 
-	public void setCarta(byte valor, char naipe) {
+	public void setCarta(int valor, char naipe) {
 		Carta c = new Carta(valor, naipe);
 		carta.add(c);
 	}
@@ -27,27 +27,27 @@ public class Player {
 		this.mao.add(mao);
 	}
 
-	public byte getCartaAlta() {
+	public int getCartaAlta() {
 		return cartaAlta;
 	}
 
-	public void setCartaAlta(byte cartaAlta) {
+	public void setCartaAlta(int cartaAlta) {
 		this.cartaAlta = cartaAlta;
 	}
 
-	public byte getCartaRanking() {
+	public int getCartaRanking() {
 		return cartaRanking;
 	}
 
-	public void setCartaRanking(byte cartaRanking) {
+	public void setCartaRanking(int cartaRanking) {
 		this.cartaRanking = cartaRanking;
 	}
 
-	public byte getKicker() {
+	public int getKicker() {
 		return kicker;
 	}
 
-	public void setKicker(byte kicker) {
+	public void setKicker(int kicker) {
 		this.kicker = kicker;
 	}
 	
