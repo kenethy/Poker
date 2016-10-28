@@ -136,23 +136,23 @@ public class Main {
 	}
 
 	// IMPRESSÃO DAS INFORMAÇÕES DOS JOGADORES
-	public static void printJogadores(Player p1, Player p2, PrintWriter out) {
+	public static void printJogadores(Player p1, Player p2) {
 		// JOGADOR 1
-		out.print("Mão Player 1: " + p1.mao.toString() + "\nCartas: ");
+		System.out.print("Mão Player 1: " + p1.mao.toString() + "\nCartas: ");
 		for (Carta card : p1.carta) {
-			out.print(card.getValor() + "" + card.getNaipe() + " ");
+			System.out.print(card.getValor() + "" + card.getNaipe() + " ");
 		}
-		out.println("\nCarta Ranking: " + p1.getCartaRanking());
-		out.println("Carta Alta: " + p1.getCartaAlta());
-		out.println();
+		System.out.println("\nCarta Ranking: " + p1.getCartaRanking());
+		System.out.println("Carta Alta: " + p1.getCartaAlta());
+		System.out.println();
 
 		// JOGADOR 2
-		out.print("Mão Player 2: " + p2.mao.toString() + "\nCartas: ");
+		System.out.print("Mão Player 2: " + p2.mao.toString() + "\nCartas: ");
 		for (Carta card : p2.carta) {
-			out.print(card.getValor() + "" + card.getNaipe() + " ");
+			System.out.print(card.getValor() + "" + card.getNaipe() + " ");
 		}
-		out.println("\nCarta Ranking: " + p2.getCartaRanking());
-		out.println("Carta Alta: " + p2.getCartaAlta());
-		out.println();
+		System.out.println("\nCarta Ranking: " + p2.getCartaRanking());
+		System.out.println("Carta Alta: " + p2.getCartaAlta());
+		System.out.println();
 	}
 }
