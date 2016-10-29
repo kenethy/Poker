@@ -62,7 +62,7 @@ public class Main {
 			vitoriasP1 += verificaVencedor(p1, p2);
 			
 			// IMPRESSAO DAS INFORMAÇÕES DOS JOGADORES
-			printJogadores(p1, p2);
+			// printJogadores(p1, p2);
 
 			// LIMPEZA DO ARRAY PARA NOVAS PARTIDAS
 			p1 = new Player();
